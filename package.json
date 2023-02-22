@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --poll --inspect --exit-child src/main"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "jest": "^29.4.3",
     "ts-jest": "^29.0.5",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.1.2",
     "typescript": "^4.9.5"
   }
 }
