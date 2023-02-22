@@ -41,6 +41,7 @@ const makeSut = (): SutTypes => {
 
 
 describe("test signupUsecase", () => {
+    
     it("Should return with correct values", async () => {
         const { props, sut } = makeSut()
 
@@ -55,5 +56,57 @@ describe("test signupUsecase", () => {
         expect(output.value.username).toBe(props.username)
     })
 
+    it("Should return an error if email is already in use", async () => {
+        const { props, sut, userRepository } = makeSut()
 
+        jest.spyOn(userRepository, "findByEmail")
+        .mockResolvedValue(true as any)
+
+        const output = await sut.execute(props)
+
+        if(output.isRight()){
+            throw new Error("it should return an error")
+        }
+
+        expect(output.value).toBeInstanceOf(SignupEmailInUseError)
+    })
+
+    it("Should return an error if username is already in use", async () => {
+        const { props, sut, userRepository } = makeSut()
+
+        jest.spyOn(userRepository, "findByUsername")
+        .mockResolvedValue(true as any)
+
+        const output = await sut.execute(props)
+
+        if(output.isRight()){
+            throw new Error("it should return an error")
+        }
+
+        expect(output.value).toBeInstanceOf(SignupUsernameInUseError)
+    })
+
+    it("Should call eventEmitter once", async () => {
+        const { props, sut, eventEmiter } = makeSut()
+
+        await sut.execute(props)
+
+        expect(eventEmiter.emit).toHaveBeenCalledTimes(1)
+    })
+
+    it("Should call userRepository.findByEmail once", async () => {
+        const { props, sut, userRepository } = makeSut()
+
+        await sut.execute(props)
+
+        expect(userRepository.findByEmail).toHaveBeenCalledTimes(1)
+    })
+
+    it("Should call userRepository.findByUsername once", async () => {
+        const { props, sut, userRepository } = makeSut()
+
+        await sut.execute(props)
+
+        expect(userRepository.findByUsername).toHaveBeenCalledTimes(1)
+    })
 })
