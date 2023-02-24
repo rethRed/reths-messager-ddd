@@ -1,8 +1,8 @@
 import { BaseEntity } from "@/modules/@shared/domain";
 
-export class Participant extends BaseEntity {
+export class ParticipantEntity extends BaseEntity {
 
-    constructor(private props: Participant.Props, id: string) {
+    constructor(private props: ParticipantEntity.Props, id: string) {
         super(id)
     }
 
@@ -11,7 +11,7 @@ export class Participant extends BaseEntity {
     }
 }
 
-export namespace Participant {
+export namespace ParticipantEntity {
     export type Props = {
         username: string
     } 
