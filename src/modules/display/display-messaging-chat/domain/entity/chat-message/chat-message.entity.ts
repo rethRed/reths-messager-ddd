@@ -15,11 +15,9 @@ export class ChatMessageEntity extends BaseEntity implements AggregateRoot {
 
 export namespace ProfileEntity {
     
-
     export type Props = {
         chatName: string
         chatImage: string
-        
     }
 
 }
