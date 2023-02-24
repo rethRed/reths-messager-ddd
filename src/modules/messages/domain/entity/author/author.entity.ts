@@ -3,7 +3,7 @@ import { Either, left, right } from "@/modules/@shared/logic";
 
 export class AuthorEntity extends BaseEntity  {
 
-    private constructor(private props: AuthorEntity.Props, id: string) {
+    constructor(private props: AuthorEntity.Props, id: string) {
         super(id)
     }
 
