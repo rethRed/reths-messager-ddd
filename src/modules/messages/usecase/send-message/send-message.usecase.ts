@@ -35,7 +35,7 @@ export class SendMessageUsecase implements UsecaseInterface {
         })
         if(messageOrError.isLeft()) return left(messageOrError.value)
 
-        this.eventEmitter.emit(new MessageSentEvent({
+        await this.eventEmitter.emit(new MessageSentEvent({
             id: messageOrError.value.id,
             authorId: messageOrError.value.author.id,
             chatId: messageOrError.value.chat.id,
