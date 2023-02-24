@@ -39,7 +39,7 @@ export class MessageEntity extends BaseEntity implements AggregateRoot {
     }
     get author(): AuthorEntity {
         return this.props.author
-    }
+}
     get chat(): ChatEntity {
         return this.props.chat
     }
