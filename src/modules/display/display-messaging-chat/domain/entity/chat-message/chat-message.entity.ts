@@ -17,7 +17,9 @@ export namespace ProfileEntity {
     
 
     export type Props = {
-
+        chatName: string
+        chatImage: string
+        
     }
 
 }
