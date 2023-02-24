@@ -13,7 +13,7 @@ const makeSut = (): SutTypes => {
     const props: MessageEntity.Input = {
         content: "any_content",
         author: new AuthorEntity({ name: "John"}, "any_author_id"),
-        chat: new ChatEntity({}, "any_chat_id")
+        chat: new ChatEntity({ participants: ["participant_id_1", "participant_id_2", "participant_id_3"], }, "any_chat_id")
     }
     const sut = MessageEntity.create(props)
 
@@ -59,4 +59,18 @@ describe("test message entity", () => {
 
         expect(sut.value).toBeInstanceOf(InvalidContentLengthError)
     })
+
+    it("Should get all chat participants", () => {
+        const { sut } = makeSut()
+
+        expect(sut.chat.getParticipants()).toEqual(["participant_id_1", "participant_id_2", "participant_id_3"])
+    })
+
+    it("Should check if is a participant", () => {
+        const { sut } = makeSut()
+        expect(sut.chat.isParticipant("not_participant")).toBe(false)
+        expect(sut.chat.isParticipant("participant_id_1")).toBe(true)
+    })
+
+    
 })
