@@ -2,11 +2,9 @@ import { AggregateRoot, BaseEntity } from "@/modules/@shared/domain";
 import { Either, left, right } from "@/modules/@shared/logic";
 import { AuthorEntity } from "../author/author.entity";
 import { ChatEntity } from "../chat/chat.entity";
-import { InvalidContentLengthError } from "./errors/invalid-content-length.error";
+import { InvalidContentLengthError } from "./errors";
 
 export class MessageEntity extends BaseEntity implements AggregateRoot {
-
-
     
     private constructor(public props: MessageEntity.Props, id?: string) {
         super(id)
