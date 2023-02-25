@@ -8,8 +8,7 @@ export class ListChatMessageUsecase implements UsecaseInterface {
 
     constructor(
         private readonly chatMessageRepository: ChatMessageRepositoryInterface
-    ) 
-    {}
+    ) {}
 
     async execute(input: ListChatMessageUsecaseInputDto): Promise<Either<Error, ListChatMessageUsecaseOutputDto>> {
         
@@ -20,10 +19,10 @@ export class ListChatMessageUsecase implements UsecaseInterface {
 
         return right({
             chat: chatMessages.map(message => ({
-                id: message.id,
-                chatName: message.chatName,
-                chatImage: message.chatImage,
+                id: message.id,                         
+                chatName: message.chatName,              
+                chatImage: message.chatImage,           
             }))                                 
-        })
+        })                                              
     }
 }
