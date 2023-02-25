@@ -14,15 +14,15 @@ const mockUserEntity = (): UserEntity => {
   return userEntityOrError.value
 }
 
-jest.mock("../client", () => inMemoryPrismaClient);
-
 afterAll(async () => {
     await inMemoryPrismaClient.$disconnect();
 });
 
 describe("test user-repository prisma integration", () => {
 
-
+  // beforeEach(async () => {
+  //   await inMemoryPrismaClient.$connect()
+  // })
 
   it("Should save a user", async () => {
     const sut = new PrismaUserRepository(inMemoryPrismaClient)
