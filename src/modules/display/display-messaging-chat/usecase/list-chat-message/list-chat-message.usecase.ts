@@ -19,7 +19,11 @@ export class ListChatMessageUsecase implements UsecaseInterface {
         })
 
         return right({
-            
+            chat: chatMessages.map(message => ({
+                id: message.id,
+                chatName: message.chatName,
+                chatImage: message.chatImage,
+            }))                                 
         })
     }
 }

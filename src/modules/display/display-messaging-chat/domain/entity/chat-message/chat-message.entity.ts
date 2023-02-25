@@ -10,6 +10,12 @@ export class ChatMessageEntity extends BaseEntity implements AggregateRoot {
 
     }
 
+    get chatName(): string {
+        return this.props.chatName
+    }
+    get chatImage(): string {
+        return this.props.chatImage
+    }
 }
 
 

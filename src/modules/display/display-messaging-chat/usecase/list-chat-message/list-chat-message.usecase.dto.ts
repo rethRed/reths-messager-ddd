@@ -7,5 +7,9 @@ export type ListChatMessageUsecaseInputDto = {
 }
 
 export type ListChatMessageUsecaseOutputDto = {
-    
+    chat: {
+        id: string
+        chatName: string
+        chatImage: string
+    }[]
 }
