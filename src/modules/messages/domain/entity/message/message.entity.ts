@@ -16,6 +16,7 @@ export class MessageEntity extends BaseEntity implements AggregateRoot {
             content: input.content,
             author: input.author,
             chat: input.chat,
+            dateTimeSent: input.dateTimeSent ?? new Date()
         }, id)
 
         const validate = messageEntity.validate()
@@ -54,12 +55,14 @@ export namespace MessageEntity {
         author: AuthorEntity
         chat: ChatEntity
         content: string
+        dateTimeSent: Date
     }
 
     export type Input = {
         author: AuthorEntity
         chat: ChatEntity
         content: string
+        dateTimeSent?: Date
     }
 
     export type Output = Either<Error, MessageEntity>
