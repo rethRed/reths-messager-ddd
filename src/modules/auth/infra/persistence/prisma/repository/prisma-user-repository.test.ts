@@ -1,5 +1,6 @@
+import { inMemoryPrismaClient } from "@/modules/@shared/infra/repository/prisma/client";
 import { UserEntity } from "@/modules/auth/domain/entity";
-import { inMemoryPrismaClient } from "../client/in-memory-prisma-client";
+
 import { PrismaUserRepository } from "./prisma-user-repository";
 
 const mockUserEntity = (): UserEntity => {
@@ -20,12 +21,12 @@ afterAll(async () => {
 
 describe("test user-repository prisma integration", () => {
 
-  // beforeEach(async () => {
-  //   await inMemoryPrismaClient.$connect()
-  // })
+  beforeEach(async () => {
+    await inMemoryPrismaClient.user.deleteMany({})
+  })
 
   it("Should save a user", async () => {
-    const sut = new PrismaUserRepository(inMemoryPrismaClient)
+    const sut = new PrismaUserRepository()
     const user = mockUserEntity()
     await sut.save(user)
   })

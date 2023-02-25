@@ -1,13 +1,12 @@
+import { prismaClient } from "@/modules/@shared/infra/repository/prisma/client";
 import { UserEntity } from "@/modules/auth/domain/entity";
 import { UserRepositoryInterface } from "@/modules/auth/domain/repository";
-import { PrismaClient } from "@prisma/client";
+
 
 export class PrismaUserRepository implements UserRepositoryInterface {
 
-    constructor(private readonly prismaClient: PrismaClient) {}
-
     async save(user: UserEntity): Promise<void> {
-        await this.prismaClient.user.create({
+        await prismaClient.user.create({
             data: {
                 id: user.id,
                 username: user.username,
