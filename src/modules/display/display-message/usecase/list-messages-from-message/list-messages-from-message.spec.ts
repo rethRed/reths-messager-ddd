@@ -1,24 +1,25 @@
 import { MessageRepositoryInterface } from "../../domain/repository"
 import { mockMessageRepository } from "../tests"
-import { ListLastMessagesUsecase } from "./list-last-messages"
-import { ListLastMessagesUsecaseInputDto } from "./list-last-messages.usecase.dto"
+import { ListMessagesFromMessageUsecase } from "./list-messages-from-message"
+import { ListMessagesFromMessageUsecaseInputDto } from "./list-messages-from-message.dto"
+
 
 type SutTypes = {
-    sut: ListLastMessagesUsecase
-    props: ListLastMessagesUsecaseInputDto
+    sut: ListMessagesFromMessageUsecase
+    props: ListMessagesFromMessageUsecaseInputDto
     messageRepository: MessageRepositoryInterface
 }
 
 const makeSut = (): SutTypes => {
 
-    const props: ListLastMessagesUsecaseInputDto = {
-        chatId: "any_chatId"
+    const props: ListMessagesFromMessageUsecaseInputDto = {
+        messageId: "any_messageId"
     }
     const messageRepository = mockMessageRepository()
-    jest.spyOn(messageRepository, "listLastMessages")
+    jest.spyOn(messageRepository, "listMessagesFromMessageId")
     .mockResolvedValue([])
 
-    const sut = new ListLastMessagesUsecase(messageRepository)
+    const sut = new ListMessagesFromMessageUsecase(messageRepository)
 
     return {
         sut,
@@ -28,16 +29,14 @@ const makeSut = (): SutTypes => {
 }
 
 
-
-describe("test listLastMessage ", () => {
+describe("test listMessagesFromMessage", () => {
 
     it("Should return right", async () => {
         const { sut, props } = makeSut()
-        
+
         const output = await sut.execute(props)
 
-        expect(output.isRight()).toBe(true)
-    
+        expect(output.isRight()).toEqual(true)
     })
 
     it("Should call messageRepository once", async () => {
@@ -45,8 +44,6 @@ describe("test listLastMessage ", () => {
         
         await sut.execute(props)
 
-        expect(messageRepository.listLastMessages).toBeCalledTimes(1)
+        expect(messageRepository.listMessagesFromMessageId).toBeCalledTimes(1)
     })
-
 })
-
