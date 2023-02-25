@@ -15,9 +15,23 @@ const mockUserEntity = (): UserEntity => {
   return userEntityOrError.value
 }
 
-afterAll(async () => {
-    await inMemoryPrismaClient.$disconnect();
-});
+type CreateUserTypes = {
+  userEntity: UserEntity
+  sut: PrismaUserRepository
+}
+
+const createUser = async (): Promise<CreateUserTypes> => {
+
+  const sut = new PrismaUserRepository()
+  const userEntity = mockUserEntity()
+  await sut.save(userEntity)
+
+  return {
+    userEntity,
+    sut
+  }
+}
+
 
 describe("test user-repository prisma integration", () => {
 
@@ -29,6 +43,65 @@ describe("test user-repository prisma integration", () => {
     const sut = new PrismaUserRepository()
     const user = mockUserEntity()
     await sut.save(user)
+
+    const foundUser = await inMemoryPrismaClient.user.findUnique({
+      where: { id: user.id}
+    })
+
+    expect(foundUser.id).toEqual(user.id)
+    expect(foundUser.username).toEqual(user.username)
+    expect(foundUser.email).toEqual(user.email)
+    expect(foundUser.password).toEqual(user.password)
+    expect(foundUser.status).toEqual(user.status)
   })
+
+  it("Should find UserByEmail", async () => {
+    const { userEntity, sut } = await createUser()
+
+    const foundUser = await sut.findByEmail(userEntity.email)
+
+    expect(foundUser.id).toEqual(userEntity.id)
+  })
+
+  it("Should return null if a user was not found by email ", async () => {
+    const sut = new PrismaUserRepository()
+
+    const foundUser = await sut.findByEmail("any_mail@mail.com")
+
+    expect(foundUser).toBe(null)
+  })
+
+  it("Should find id", async () => {
+    const { userEntity, sut } = await createUser()
+
+    const foundUser = await sut.findById(userEntity.id)
+
+    expect(foundUser.id).toEqual(userEntity.id)
+  })
+
+  it("Should return null if a user was not found by id ", async () => {
+    const sut = new PrismaUserRepository()
+
+    const foundUser = await sut.findByEmail("any_id")
+
+    expect(foundUser).toBe(null)
+  })
+
+  it("Should find by username", async () => {
+    const { userEntity, sut } = await createUser()
+
+    const foundUser = await sut.findByUsername(userEntity.username)
+
+    expect(foundUser.id).toEqual(userEntity.id)
+  })
+
+  it("Should return null if a user was not found by username ", async () => {
+    const sut = new PrismaUserRepository()
+
+    const foundUser = await sut.findByUsername("any_username")
+
+    expect(foundUser).toBe(null)
+  })
+
 
 })
