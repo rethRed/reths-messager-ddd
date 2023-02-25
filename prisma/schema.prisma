@@ -8,7 +8,7 @@ generator client {
 
 datasource sqlite {
   provider = "sqlite"
-  url = "sqlite:memory:"
+  url =  "file:dev.db?mode=memory&cache=shared"
 }
 
 // datasource db {
