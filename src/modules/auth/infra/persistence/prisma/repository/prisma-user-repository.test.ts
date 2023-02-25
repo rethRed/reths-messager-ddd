@@ -39,6 +39,10 @@ describe("test user-repository prisma integration", () => {
     await inMemoryPrismaClient.user.deleteMany({})
   })
 
+  afterAll(async () => {
+    await inMemoryPrismaClient.user.deleteMany({})
+  })
+
   it("Should save a user", async () => {
     const sut = new PrismaUserRepository()
     const user = mockUserEntity()
